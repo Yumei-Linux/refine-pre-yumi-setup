@@ -83,8 +83,37 @@ make MANSUFFIX=ssl install
 mv -v /usr/share/doc/openssl /usr/share/doc/openssl-3.0.8
 cp -vfr doc/* /usr/share/doc/openssl-3.0.8
 
+cd ../
+tar -xvf ./wget-1.21.4.tar.gz
+cd ./wget-1.21.4
+
+./configure --prefix=/usr \
+    --sysconfdir=/etc \
+    --with-ssl=openssl
+
+make && make install
+
+cd ../
+
 echo "[I] Remember to configure the /etc/resolv.conf in order to let yumi resolve dns"
 echo "  * Here is an example on how to use the google's dns"
 echo "  * $ echo 'nameserver 8.8.8.8' > /etc/resolv.conf"
+printf "Do it from another terminal and when done press enter to continue... "
+read
+
+while [ ! -f /usr/bin/yumi ]; do
+    echo "refine-pre-yumi-setup: Cannot find a yumi installation, please build it from the host system and put it at /usr/bin to continue"
+    printf "Press enter to try to continue... "
+    read
+done
+
+while [ ! -d /var/yumi ]; do
+    echo "refine-pre-yumi-setup: Cannot find an initial yumi database, please clone it at /var/yumi to continue"
+    echo "$ git clone https://github.com/yumei-linux/yumi-packages.git /mnt/var/yumi (in the host system)"
+    printf "Press enter to try to continue... "
+    read
+done
+
+/usr/bin/yumi grab security/ca-certificates
 
 popd
