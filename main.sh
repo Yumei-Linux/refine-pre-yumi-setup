@@ -5,6 +5,12 @@ if [ ! -d /sources ]; then
     exit 1
 fi
 
+while [ ! -f /sources/wget-1.21.4.tar.gz ]; do
+    echo "refine-pre-yumi-setup: This script requires you to download https://ftp.gnu.org/gnu/wget/wget-1.21.4.tar.gz in /sources/wget-1.21.4.tar.gz"
+    printf "Please download it from the host system before continuing... "
+    read
+done
+
 push /sources
 
 tar -xvf ./zlib-1.2.13.tar.xz
@@ -72,7 +78,7 @@ cd openssl-3.0.8
 
 make
 sed -i '/INSTALL_LIBS/s/libcrypto.a libssl.a//' Makefile
-make MANSUFFIX=ssl isntall
+make MANSUFFIX=ssl install
 
 mv -v /usr/share/doc/openssl /usr/share/doc/openssl-3.0.8
 cp -vfr doc/* /usr/share/doc/openssl-3.0.8
