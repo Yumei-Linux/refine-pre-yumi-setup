@@ -84,6 +84,17 @@ mv -v /usr/share/doc/openssl /usr/share/doc/openssl-3.0.8
 cp -vfr doc/* /usr/share/doc/openssl-3.0.8
 
 cd ../
+tar -xvf ./pkg-config-0.29.2.tar.gz
+cd pkg-config-0.29.2
+
+./configure --prefix=/usr \
+    --with-internal-glib \
+    --disable-host-tool \
+    --docdir=/usr/share/doc/pkg-config-0.29.2
+
+make && make install
+
+cd ../
 tar -xvf ./wget-1.21.4.tar.gz
 cd ./wget-1.21.4
 
