@@ -11,7 +11,7 @@ while [ ! -f /sources/wget-1.21.4.tar.gz ]; do
     read
 done
 
-push /sources
+pushd /sources
 
 tar -xvf ./zlib-1.2.13.tar.xz
 cd zlib-1.2.13
